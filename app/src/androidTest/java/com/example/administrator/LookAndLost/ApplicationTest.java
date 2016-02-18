@@ -1,4 +1,4 @@
-package com.example.administrator.myapplication;
+package com.example.administrator.LookAndLost;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
