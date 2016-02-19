@@ -1,17 +1,16 @@
 package com.example.administrator.LookAndLost.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,40 +21,36 @@ import com.example.administrator.LookAndLost.BuildConfig;
 import com.example.administrator.LookAndLost.R;
 import com.example.administrator.LookAndLost.fragment.MainFragment;
 
-import org.xutils.view.annotation.ContentView;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@ContentView(R.layout.activity_main)
-public class MainActivity extends BaseActivity
+import butterknife.InjectView;
+import butterknife.OnClick;
+
+public class MainActivity extends BarBaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    @ViewInject(R.id.toolbar)
-    public Toolbar toolbar;
-
-    @ViewInject(R.id.nav_view)
+    @InjectView(R.id.nav_view)
     public NavigationView navNv;
 
-    @ViewInject(R.id.drawer_layout)
+    @InjectView(R.id.drawer_layout)
     public DrawerLayout drawerLayout;
 
-    @ViewInject(R.id.main_fab)
+    @InjectView(R.id.main_fab)
     public FloatingActionButton mainFab;
-    @Event(R.id.main_fab)
-    private void fabOnClick(View view){
-        Snackbar.make(view,"ni hao ",Snackbar.LENGTH_SHORT).show();
+    @OnClick(R.id.main_fab)
+    public void fabOnClick(View view){
+//        Snackbar.make(view,"ni hao ",Snackbar.LENGTH_SHORT).show();
+        startActivity(new Intent(this,LookAndLostReleaseActivity.class));
     }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setSupportActionBar(toolbar);
+
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -64,7 +59,8 @@ public class MainActivity extends BaseActivity
 
         navNv.setNavigationItemSelectedListener(this);
 
-        Fragment fragment=new MainFragment();
+        Fragment fragment= MainFragment.newInstance();
+//        Fragment fragment= LookAndLostListFragment.newInstance(1);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.main_fl,fragment);
@@ -88,6 +84,11 @@ public class MainActivity extends BaseActivity
             }
         });
 
+    }
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_main;
     }
 
     private List<Map<String,String>> getData(){

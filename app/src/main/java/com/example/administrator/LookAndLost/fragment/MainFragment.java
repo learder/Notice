@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -14,28 +14,38 @@ import android.widget.TextView;
 
 import com.example.administrator.LookAndLost.R;
 
-import org.xutils.view.annotation.ContentView;
-import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.InjectView;
+
 /**
  * Created by Administrator on 2016/2/18.
  */
-@ContentView(R.layout.fragment_main)
 public class MainFragment extends BaseFragment{
 
-    @ViewInject(R.id.fragment_main_vp)
+    @InjectView(R.id.fragment_main_vp)
     public ViewPager vp;
 
-    @ViewInject(R.id.fragment_main_tl)
+    @InjectView(R.id.fragment_main_tl)
     public TabLayout tabLayout;
 
 
+    public static BaseFragment newInstance() {
+        MainFragment fragment=new MainFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public MainFragment() {
 
+    }
+
+    @Override
+    protected int getCreateView() {
+        return R.layout.fragment_main;
     }
 
     @Override
@@ -43,7 +53,6 @@ public class MainFragment extends BaseFragment{
         super.onViewCreated(view, savedInstanceState);
 
         ViewpagerAdapter adapter=new ViewpagerAdapter(getChildFragmentManager(),getFragmentList());
-//        TestAdapter adapter = new TestAdapter();
         vp.setAdapter(adapter);
         tabLayout.setTabMode(adapter.getCount()>4?TabLayout.MODE_SCROLLABLE:TabLayout.MODE_FIXED);
         tabLayout.setupWithViewPager(vp);
@@ -98,7 +107,7 @@ public class MainFragment extends BaseFragment{
         }
     }
 
-    class ViewpagerAdapter extends FragmentStatePagerAdapter{
+    class ViewpagerAdapter extends FragmentPagerAdapter{
 
         List<Fragment> fragments;
 
@@ -109,7 +118,7 @@ public class MainFragment extends BaseFragment{
 
         @Override
         public boolean isViewFromObject(View view, Object object) {
-            return view==object;
+            return view == ((Fragment) object).getView();
         }
 
         @Override

@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <android.support.v7.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="12dp"
+    app:cardBackgroundColor="#02f588"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_margin="12dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    <TextView
-        android:id="@+id/item_look_and_lost_tv"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="123"/>
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/item_look_and_lost_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="一个钥匙"/>
+
+        <ImageView
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_width="match_parent"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="centerCrop"
+            android:layout_height="120dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="捡到地址：杭州市西湖区文一西路1999号未来科技城海川园"/>
+
+
+    </LinearLayout>
 
     </android.support.v7.widget.CardView>
