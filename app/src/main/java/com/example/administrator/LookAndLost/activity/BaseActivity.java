@@ -1,6 +1,7 @@
 package com.example.administrator.LookAndLost.activity;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseActivity extends AppCompatActivity{
     SystemBarTintManager tintManager;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity{
             tintManager.setNavigationBarTintEnabled(true);
             tintManager.setStatusBarTintColor(getResources().getColor(R.color.colorPrimaryDark));
         }
+        context=this;
     }
 
     protected abstract int getContentView();

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:background="#f2f2f2" >
+
+        <TextView
+            android:id="@+id/location_city_activity_listview_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="20dp"
+            android:text="字母"
+            android:textColor="#333333"
+            android:textSize="12sp" />
+<!-- 
+        <View
+            android:id="@+id/wifi_statu_on_listview_item_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_a9adb5" /> -->
+    </RelativeLayout>
+
+</RelativeLayout>
