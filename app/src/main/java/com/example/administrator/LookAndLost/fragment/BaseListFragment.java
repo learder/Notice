@@ -11,6 +11,7 @@ import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.example.administrator.LookAndLost.R;
 import com.example.administrator.LookAndLost.utils.RecyclerItemClickListener;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.InjectView;
 
@@ -19,6 +20,8 @@ import butterknife.InjectView;
  * Created by Administrator on 2016/2/18.
  */
 public abstract class BaseListFragment extends BaseFragment implements OnRefreshListener,OnLoadMoreListener,RecyclerItemClickListener.OnItemClickListener {
+
+    protected String TAG=getClass().getSimpleName();
 
     @InjectView(R.id.swipe_target)
     public RecyclerView recyclerView;
@@ -66,5 +69,17 @@ public abstract class BaseListFragment extends BaseFragment implements OnRefresh
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageStart(TAG);
     }
 }

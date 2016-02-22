@@ -30,10 +30,12 @@
                 app:layout_collapseParallaxMultiplier="0.7"
                 android:layout_height="240dp"/>
 
-            <include layout="@layout/include_toolbar"
+            <android.support.v7.widget.Toolbar
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/toolbar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="pin"/>
 

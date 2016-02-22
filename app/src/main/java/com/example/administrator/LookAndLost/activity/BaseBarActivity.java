@@ -6,19 +6,18 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.administrator.LookAndLost.R;
 
-import butterknife.InjectView;
-
 /**
  * Created by Administrator on 2016/2/19.
  */
-public abstract class BarBaseActivity extends BaseActivity {
+public abstract class BaseBarActivity extends BaseActivity {
 
-    @InjectView(R.id.toolbar)
+//    @InjectView(R.id.toolbar)
     public Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        toolbar= (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 //        if(!TextUtils.isEmpty(NavUtils.getParentActivityName(this))){
 //            getSupportActionBar().setDisplayHomeAsUpEnabled(true);

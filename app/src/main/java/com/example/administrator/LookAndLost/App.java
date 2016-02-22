@@ -7,14 +7,32 @@ import android.content.Context;
  * Created by Administrator on 2016/2/18.
  */
 public class App extends Application {
+    private static App instance;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        setI(this);
+    }
+
+    /**
+     * findbugs 不能将常量直接复制给静态变量 所以这里绕了一圈
+     * @param wlanApplication
+     */
+    public static void setInstance(App wlanApplication){
+        App.instance=wlanApplication;
+    }
+
+    /**
+     * findbugs 不能将常量直接复制给静态变量 所以这里绕了一圈
+     * @param wlanApplication
+     */
+    public void setI (App wlanApplication) {
+        setInstance(wlanApplication);
     }
 
 
     public static Context getAppContext(){
-        return getAppContext();
+        return instance.getApplicationContext();
     }
 }

@@ -17,12 +17,17 @@ import com.example.administrator.LookAndLost.BuildConfig;
 import com.example.administrator.LookAndLost.utils.Constants;
 import com.example.administrator.LookAndLost.utils.SPUtils;
 import com.google.gson.Gson;
+import com.google.gson.internal.$Gson$Types;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
 /**
  * Created by Administrator on 2016/2/20.
+ * 网络请求
  */
 public class NetRequest {
 
@@ -33,29 +38,28 @@ public class NetRequest {
     private static String device="";
     private static int versionCode=-1;
     private Gson gson;
+    private static NetRequest instance;
 
     private NetRequest(){
         requestQueue=Volley.newRequestQueue(App.getAppContext());
         gson=new Gson();
-
     }
 
-    public interface NetRequestCallBack<T>{
-
-        void onSuccess(T t);
-        void onFail(int error,String str);
-        void onEmpty();
-
+    public static NetRequest getInstance(){
+        if (instance==null){
+            instance=new NetRequest();
+        }
+        return instance;
     }
 
-    public synchronized void request(int commandId,JSONObject param, NetRequestCallBack callBack,boolean cache){
+    public synchronized void request(int commandId,JSONObject param,ResultCallback callback, boolean cache){
         JSONObject newparam=getCompleteParam(commandId,param);
         if (BuildConfig.DEBUG) Log.d("param", newparam.toString());
 
         if (cache){
             //数据库
         }else {
-            netRequest(newparam,callBack);
+            netRequest(newparam,callback);
         }
 
     }
@@ -66,35 +70,42 @@ public class NetRequest {
      * 网络请求
      * @param params 参数
      */
-    private void netRequest(JSONObject params, final NetRequestCallBack netRequestCallBack) {
+    private void netRequest(JSONObject params, final ResultCallback callback) {
 
         // Volley请求
         StringRequest stringRequest=new StringRequest(URL + params, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (TextUtils.isEmpty(response)){
-                    netRequestCallBack.onFail(ResultCode.RESULT_CLIENT_UNKNOW.getCode(),ResultCode.RESULT_CLIENT_UNKNOW.getString());
+                    callback.onError(ResultCode.RESULT_CLIENT_UNKNOW.getCode(),ResultCode.RESULT_CLIENT_UNKNOW.getString());
                 }
                 try {
                     JSONObject json=new JSONObject(response);
                     int resultCode=json.optInt("resultCode");
                     if (resultCode==ResultCode.RESULT_SERVICE_SUCCESS.getCode()){
                         String str=json.getString("data");
-                        netRequestCallBack.onSuccess(str);
+                        if (callback.mType == String.class)
+                        {
+                            callback.onResponse(str);
+                        } else
+                        {
+                            Object o = gson.fromJson(str, callback.mType);
+                            callback.onResponse(o);
+                        }
                     }else {
                         String resultString=json.optString("resultString");
-                        netRequestCallBack.onFail(resultCode,resultString);
+                        callback.onError(resultCode,resultString);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    netRequestCallBack.onFail(ResultCode.RESULT_CLIENT_JSONERROR.getCode(),ResultCode.RESULT_CLIENT_JSONERROR.getString());
+                    callback.onError(ResultCode.RESULT_CLIENT_JSONERROR.getCode(),ResultCode.RESULT_CLIENT_JSONERROR.getString());
                 }
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                netRequestCallBack.onFail(ResultCode.RESULT_CLIENT_VOLLEY_ERROR.getCode(),ResultCode.RESULT_CLIENT_VOLLEY_ERROR.getString());
+                callback.onError(ResultCode.RESULT_CLIENT_VOLLEY_ERROR.getCode(),ResultCode.RESULT_CLIENT_VOLLEY_ERROR.getString());
             }
         });
 
@@ -155,6 +166,31 @@ public class NetRequest {
         }
         return versionCode;
 
+    }
+
+    public static abstract class ResultCallback<T>
+    {
+        Type mType;
+
+        public ResultCallback()
+        {
+            mType = getSuperclassTypeParameter(getClass());
+        }
+
+        static Type getSuperclassTypeParameter(Class<?> subclass)
+        {
+            Type superclass = subclass.getGenericSuperclass();
+            if (superclass instanceof Class)
+            {
+                throw new RuntimeException("Missing type parameter.");
+            }
+            ParameterizedType parameterized = (ParameterizedType) superclass;
+            return $Gson$Types.canonicalize(parameterized.getActualTypeArguments()[0]);
+        }
+
+        public abstract void onError(int error,String str);
+
+        public abstract void onResponse(T response);
     }
 
 

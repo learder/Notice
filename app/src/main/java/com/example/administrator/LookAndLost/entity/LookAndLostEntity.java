@@ -4,6 +4,7 @@ package com.example.administrator.LookAndLost.entity;
  * Created by Administrator on 2016/2/18.
  */
 public class LookAndLostEntity {
+    int id;
     String title;
     String location;
     String note;
@@ -39,5 +40,23 @@ public class LookAndLostEntity {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "LookAndLostEntity{" +
+                "title='" + title + '\'' +
+                ", location='" + location + '\'' +
+                ", note='" + note + '\'' +
+                ", img='" + img + '\'' +
+                '}';
     }
 }

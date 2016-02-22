@@ -11,7 +11,7 @@ import butterknife.InjectView;
 /**
  * Created by Administrator on 2016/2/19.
  */
-public class LookAndLostDetailActivity extends BarBaseActivity {
+public class LookAndLostDetailActivity extends BaseBarActivity {
 
     @InjectView(R.id.ctl)
     public CollapsingToolbarLayout collapsingToolbarLayout;

@@ -4,14 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.administrator.LookAndLost.R;
 import com.example.administrator.LookAndLost.activity.LookAndLostDetailActivity;
 import com.example.administrator.LookAndLost.adapter.AdapterLookAndLost;
 import com.example.administrator.LookAndLost.entity.LookAndLostEntity;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -83,8 +86,9 @@ public class LookAndLostListFragment extends BaseListFragment {
 
     public List<LookAndLostEntity> getData() {
         List<LookAndLostEntity> data=new ArrayList<>();
-        LookAndLostEntity entity=new LookAndLostEntity();
+        LookAndLostEntity entity;
         for (int i=0;i<30;i++){
+            entity=new LookAndLostEntity();
             entity.setTitle("这是第"+i+"个标题");
             data.add(entity);
         }
@@ -92,7 +96,13 @@ public class LookAndLostListFragment extends BaseListFragment {
     }
 
     @Override
-    public void onItemClick(View view, int position) {
+    public void onItemClick(RecyclerView recyclerView, View childView, int position) {
+        AdapterLookAndLost adapter= (AdapterLookAndLost) recyclerView.getAdapter();
+        LookAndLostEntity entity=adapter.getItem(position);
+        HashMap hashMap=new HashMap();
+        hashMap.put("Id",entity.getId());
+        hashMap.put("title",entity.getTitle());
+        MobclickAgent.onEvent(getContext(),"onItemClick",hashMap);
         startActivity(new Intent(getContext(), LookAndLostDetailActivity.class));
     }
 

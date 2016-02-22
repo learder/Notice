@@ -2,7 +2,6 @@ package com.example.administrator.LookAndLost.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -11,15 +10,16 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.example.administrator.LookAndLost.BuildConfig;
 import com.example.administrator.LookAndLost.R;
 import com.example.administrator.LookAndLost.fragment.MainFragment;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
+import com.umeng.update.UpdateConfig;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +29,7 @@ import java.util.Map;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class MainActivity extends BarBaseActivity
+public class MainActivity extends BaseBarActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @InjectView(R.id.nav_view)
@@ -43,6 +43,7 @@ public class MainActivity extends BarBaseActivity
     @OnClick(R.id.main_fab)
     public void fabOnClick(View view){
 //        Snackbar.make(view,"ni hao ",Snackbar.LENGTH_SHORT).show();
+        MobclickAgent.onEvent(context,"onClic_main_fab");
         startActivity(new Intent(this,LookAndLostReleaseActivity.class));
     }
 
@@ -60,29 +61,12 @@ public class MainActivity extends BarBaseActivity
         navNv.setNavigationItemSelectedListener(this);
 
         Fragment fragment= MainFragment.newInstance();
-//        Fragment fragment= LookAndLostListFragment.newInstance(1);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.main_fl,fragment);
         fragmentTransaction.commitAllowingStateLoss();
-
-
-//        ListView listview= (ListView) findViewById(R.id.listview);
-//        listview.setAdapter(new SimpleAdapter(this,getData(),android.R.layout.simple_list_item_1,new String[]{"string"}, new int[]{android.R.id.text1}));
-        List<Map<String,String>> ls=getData();
-        TextView tv;
-//        for (Map<String,String> map:ls){
-//            tv=new TextView(this);
-//            tv.setText(map.get("string"));
-//            ll.addView(tv);
-//        }
-        AppBarLayout app_abl= (AppBarLayout) findViewById(R.id.app_abl);
-        app_abl.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (BuildConfig.DEBUG) Log.d("MainActivity", "verticalOffset-->" + verticalOffset);
-            }
-        });
+        UpdateConfig.setDebug(BuildConfig.DEBUG);
+        UmengUpdateAgent.update(this);
 
     }
 

@@ -28,7 +28,7 @@ import butterknife.OnItemClick;
 /**
  * Created by Administrator on 2016/2/20.
  */
-public class CityActivity extends BarBaseActivity implements LocationCitySearchQuery.SearchQueryCallBack{
+public class CityActivity extends BaseBarActivity implements LocationCitySearchQuery.SearchQueryCallBack{
 
     @InjectView(R.id.location_city_activity_slide_ssv)
     public SidebarView location_city_activity_slide_ssv;

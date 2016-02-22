@@ -61,12 +61,12 @@ public class LocationCitySearchQuery implements TextWatcher {
 		list=LocationSourceManage.getInstance(context).getCityList();
 		//添加当前城市列表，注意，城市跟模式，只使用逗号分开
 		//这么做是因为我不想再给对象增加一个字段，以及再传递一个值！！
-		if (list!=null) {
-			CityEntity cityEntity=new CityEntity();
-			cityEntity.setFullName(currentCity.toString());
-			cityEntity.type=CityEntity.TYPE_CURRENT_CITY;
-			list.add(0, cityEntity);
-		}
+//		if (list!=null) {
+//			CityEntity cityEntity=new CityEntity();
+//			cityEntity.setFullName(currentCity.toString());
+//			cityEntity.type=CityEntity.TYPE_CURRENT_CITY;
+//			list.add(0, cityEntity);
+//		}
 		return list;
 	}
 	

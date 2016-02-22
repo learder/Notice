@@ -9,7 +9,7 @@ import com.example.administrator.LookAndLost.R;
  * Created by 颜厥共 on 2016/2/19.
  * email:644613693@qq.com
  */
-public class LookAndLostReleaseActivity extends BarBaseActivity {
+public class LookAndLostReleaseActivity extends BaseBarActivity {
 //    @ViewInject(R.id.release_fab)
 //    private FloatingActionButton release_fab;
 //

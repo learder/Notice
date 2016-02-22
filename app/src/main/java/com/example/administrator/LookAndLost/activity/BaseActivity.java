@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.administrator.LookAndLost.R;
 import com.example.administrator.LookAndLost.utils.SystemBarTintManager;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
 
@@ -23,13 +24,13 @@ public abstract class BaseActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
         ButterKnife.inject(this);
+        context=this;
         if(Build.VERSION.SDK_INT <= 19){
             tintManager = new SystemBarTintManager(this);
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setNavigationBarTintEnabled(true);
             tintManager.setStatusBarTintColor(getResources().getColor(R.color.colorPrimaryDark));
         }
-        context=this;
     }
 
     protected abstract int getContentView();
@@ -44,5 +45,17 @@ public abstract class BaseActivity extends AppCompatActivity{
     }
     public void setNavigationColor(int color){
         tintManager.setNavigationBarTintColor(color);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

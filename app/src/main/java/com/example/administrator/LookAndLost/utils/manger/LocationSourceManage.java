@@ -3,8 +3,9 @@ package com.example.administrator.LookAndLost.utils.manger;
 import android.content.Context;
 import android.text.TextUtils;
 
-
 import com.example.administrator.LookAndLost.entity.CityEntity;
+import com.example.administrator.LookAndLost.utils.Constants;
+import com.example.administrator.LookAndLost.utils.FileUtil;
 import com.lidroid.xutils.DbUtils;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.db.sqlite.WhereBuilder;
@@ -19,10 +20,9 @@ public class LocationSourceManage {
 	private DbUtils db;
 	
 	public LocationSourceManage(Context context) {
-//		String path= FileUtil.createFileDir("dbDir/").getPath();
-		String path=android.os.Environment.getExternalStorageDirectory()
-				.getAbsolutePath();
-		db=DbUtils.create(context, path, "prov_city_area_street.db");
+		String path=FileUtil.createFileDir("dbDir/").getPath();
+		db=DbUtils.create(context, path, Constants.LOCATION_CITY_DB_NAME_DB);
+//		db=DbUtils.create(context, path, "prov_city_area_street.db");
 		db.configDebug(true);
 		db.configAllowTransaction(true);
 		instance=this;
