@@ -2,13 +2,11 @@ package com.example.administrator.LookAndLost.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.administrator.LookAndLost.BuildConfig;
 import com.example.administrator.LookAndLost.R;
 import com.example.administrator.LookAndLost.entity.LookAndLostEntity;
 
@@ -47,7 +45,6 @@ public class AdapterLookAndLost extends RecyclerView.Adapter<AdapterLookAndLost.
     @Override
     public void onBindViewHolder(ViewHolderLookAndLost holder, int position) {
         LookAndLostEntity entity=list.get(position);
-        if (BuildConfig.DEBUG) Log.d("AdapterLookAndLost", entity.toString());
         String title=entity.getTitle();
         holder.tv.setText(title);
     }

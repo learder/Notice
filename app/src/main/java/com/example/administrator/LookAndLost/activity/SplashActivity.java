@@ -12,6 +12,7 @@ import com.example.administrator.LookAndLost.R;
 import com.example.administrator.LookAndLost.utils.Constants;
 import com.example.administrator.LookAndLost.utils.FileUtil;
 import com.example.administrator.LookAndLost.utils.SPUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.IOException;
 import java.util.Timer;
@@ -34,6 +35,7 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         city=SPUtils.get4Sp(this, Constants.KEY_CITY,"");
+        MobclickAgent.setDebugMode(BuildConfig.DEBUG);
         if (TextUtils.isEmpty(city)){
             new Thread() {
 
@@ -63,10 +65,11 @@ public class SplashActivity extends BaseActivity {
                 }
 
             }.start();
+        }else {
+            skipActivity();
         }
-        skipActivity();
-
     }
+
 
     private void skipActivity(){
         new Timer().schedule(new TimerTask() {

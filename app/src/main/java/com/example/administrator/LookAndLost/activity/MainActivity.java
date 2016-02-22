@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -66,8 +68,22 @@ public class MainActivity extends BaseBarActivity
         fragmentTransaction.add(R.id.main_fl,fragment);
         fragmentTransaction.commitAllowingStateLoss();
         UpdateConfig.setDebug(BuildConfig.DEBUG);
-        UmengUpdateAgent.update(this);
+        updataApp();
 
+    }
+
+    /**
+     * UMeng自动更新
+     */
+    private void updataApp(){
+        new Timer().schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                UmengUpdateAgent.update(context);
+            }
+
+        },10000);
     }
 
     @Override

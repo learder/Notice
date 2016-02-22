@@ -19,10 +19,10 @@ public class LookAndLostDetailActivity extends BaseBarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setBarTitle("详情");
-        collapsingToolbarLayout.setTitle("12345");
-
+//        collapsingToolbarLayout.setCollapsedTitleGravity(Gravity.VERTICAL_GRAVITY_MASK);
+//        collapsingToolbarLayout.setContentScrimColor(0xff555555);
+//        collapsingToolbarLayout.setCollapsedTitleGravity(Gravity.CENTER);
+//        collapsingToolbarLayout.setExpandedTitleGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL);
     }
 
     @Override
@@ -30,5 +30,13 @@ public class LookAndLostDetailActivity extends BaseBarActivity {
         return R.layout.layout_look_and_lost_detail;
     }
 
+    @Override
+    protected void setBarTitle(String str) {
+        if (collapsingToolbarLayout==null){
+            super.setBarTitle(str);
+        }else {
+            collapsingToolbarLayout.setTitle(str);
+        }
 
+    }
 }

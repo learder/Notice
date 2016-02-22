@@ -1,6 +1,5 @@
 package com.example.administrator.LookAndLost.activity;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
@@ -22,9 +21,9 @@ public abstract class BaseBarActivity extends BaseActivity {
 //        if(!TextUtils.isEmpty(NavUtils.getParentActivityName(this))){
 //            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        }
-        toolbar.setNavigationIcon(R.mipmap.ic_launcher);
-//        StatusBarCompat.compat(this,0xff777777);
-        setStatusColor(Color.parseColor("#ff112233"));
+//        toolbar.setNavigationIcon(R.mipmap.ic_launcher);
+
+
     }
 
     protected void setBarTitle(String str){
