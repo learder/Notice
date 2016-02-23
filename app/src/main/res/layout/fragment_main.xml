@@ -12,8 +12,8 @@
         android:id="@+id/fragment_main_tl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabIndicatorColor="#ff996633"
-        app:tabSelectedTextColor="#ff775522"
+        app:tabIndicatorColor="@color/colorAccent"
+        app:tabSelectedTextColor="@color/colorAccent"
         android:fitsSystemWindows="true"
         app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:tabTextColor="#ff222222"/>

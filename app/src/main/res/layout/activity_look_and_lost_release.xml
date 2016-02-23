@@ -9,7 +9,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:fitsSystemWindows="true"
-        app:layout_scrollFlags="scroll"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed"
         android:layout_height="wrap_content">
         <android.support.v7.widget.Toolbar
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:fitsSystemWindows="true"
-        app:layout_collapseMode="pin"/>
+        app:layout_collapseMode="parallax"/>
     </android.support.design.widget.AppBarLayout>
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -38,6 +38,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:src="@mipmap/ic_launcher"
+            android:id="@+id/release_add_img_iv"
             android:layout_height="480dp" />
 
         <android.support.design.widget.TextInputLayout

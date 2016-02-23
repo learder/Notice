@@ -1,5 +1,7 @@
 package com.example.administrator.LookAndLost.utils.network;
 
+import com.example.administrator.LookAndLost.utils.network.NetRequest;
+
 import org.json.JSONObject;
 
 /**
@@ -9,8 +11,8 @@ import org.json.JSONObject;
  */
 public class CommandIdManager {
     public static final int COMMAND_ID_LOST_LIST=100;
-    public static final int COMMAND_ID_LOOK_LIST=100;
-    public static final int COMMAND_ID_RELEASE=100;
+    public static final int COMMAND_ID_LOOK_LIST=101;
+    public static final int COMMAND_ID_RELEASE=102;
 
     public static void getLostList(JSONObject param, NetRequest.ResultCallback callback, boolean cache){
         NetRequest.getInstance().request(COMMAND_ID_LOST_LIST,param,callback,cache);

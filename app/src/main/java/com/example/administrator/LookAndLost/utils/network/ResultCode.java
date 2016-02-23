@@ -11,6 +11,12 @@ public enum ResultCode {
         }
     },
 
+    RESULT_CLIENT_SUCCESS(2000){
+      public String getString(){
+          return "客户端测试数据请求成功";
+      }
+    },
+
     RESULT_CLIENT_UNKNOW(20001){
         public String getString(){
             return "服务器返回的数据为空";
@@ -32,6 +38,12 @@ public enum ResultCode {
     RESULT_CLIENT_VOLLEY_ERROR(20004){
         public String getString(){
             return "Volley错误";
+        }
+    },
+
+    RESULT_CLIENT_COMMAND_ID_ERROR(20005){
+        public String getString(){
+            return "测试数据没有这个接口数据";
         }
     };
 

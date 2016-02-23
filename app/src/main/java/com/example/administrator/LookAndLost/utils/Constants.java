@@ -8,6 +8,8 @@ public class Constants {
     public static final String KEY_CITY="key_city";
     public static final String KEY_DEVICE="key_device";
 
+    public static final String KEY_LOOK_AND_LOST_ENTITY="key_look_and_lost_entity";
+
 
     public static final String DEFAULT_CITY="杭州";
 

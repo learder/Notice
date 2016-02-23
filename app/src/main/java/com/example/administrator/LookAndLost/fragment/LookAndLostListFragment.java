@@ -3,12 +3,15 @@ package com.example.administrator.LookAndLost.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.administrator.LookAndLost.R;
 import com.example.administrator.LookAndLost.activity.LookAndLostDetailActivity;
+import com.example.administrator.LookAndLost.activity.MainActivity;
 import com.example.administrator.LookAndLost.adapter.AdapterLookAndLost;
 import com.example.administrator.LookAndLost.entity.LookAndLostEntity;
 import com.umeng.analytics.MobclickAgent;
@@ -100,10 +103,17 @@ public class LookAndLostListFragment extends BaseListFragment {
         AdapterLookAndLost adapter= (AdapterLookAndLost) recyclerView.getAdapter();
         LookAndLostEntity entity=adapter.getItem(position);
         HashMap hashMap=new HashMap();
-        hashMap.put("Id",entity.getId());
+        hashMap.put("Id",entity.getEventId());
         hashMap.put("title",entity.getTitle());
         MobclickAgent.onEvent(getContext(),"onItemClick",hashMap);
-        startActivity(new Intent(getContext(), LookAndLostDetailActivity.class));
+        Intent intent=new Intent(getContext(), LookAndLostDetailActivity.class);
+        ActivityOptionsCompat optionsCompat=ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),childView, MainActivity.TRANSITION);
+        try {
+            ActivityCompat.startActivity(getActivity(),intent,optionsCompat.toBundle());
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            startActivity(intent);
+        }
     }
 
     @Override

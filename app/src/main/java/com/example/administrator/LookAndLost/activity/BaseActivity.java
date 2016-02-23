@@ -58,4 +58,9 @@ public abstract class BaseActivity extends AppCompatActivity{
         super.onPause();
         MobclickAgent.onPause(this);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

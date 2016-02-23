@@ -56,8 +56,14 @@ public class MainFragment extends BaseFragment{
         vp.setAdapter(adapter);
         tabLayout.setTabMode(adapter.getCount()>4?TabLayout.MODE_SCROLLABLE:TabLayout.MODE_FIXED);
         tabLayout.setupWithViewPager(vp);
-        tabLayout.setTabsFromPagerAdapter(adapter);
+//        tabLayout.setTabsFromPagerAdapter(adapter);
 
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     public List<Fragment> getFragmentList(){

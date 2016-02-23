@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,14 +19,11 @@ import android.view.View;
 import com.example.administrator.LookAndLost.BuildConfig;
 import com.example.administrator.LookAndLost.R;
 import com.example.administrator.LookAndLost.fragment.MainFragment;
+import com.example.administrator.LookAndLost.utils.ShareUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 import com.umeng.update.UpdateConfig;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -33,6 +32,8 @@ import butterknife.OnClick;
 
 public class MainActivity extends BaseBarActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public static final String TRANSITION="transition_img";
 
     @InjectView(R.id.nav_view)
     public NavigationView navNv;
@@ -44,9 +45,17 @@ public class MainActivity extends BaseBarActivity
     public FloatingActionButton mainFab;
     @OnClick(R.id.main_fab)
     public void fabOnClick(View view){
-//        Snackbar.make(view,"ni hao ",Snackbar.LENGTH_SHORT).show();
         MobclickAgent.onEvent(context,"onClic_main_fab");
-        startActivity(new Intent(this,LookAndLostReleaseActivity.class));
+        ActivityOptionsCompat options =
+                ActivityOptionsCompat.makeScaleUpAnimation(view,view.getWidth()/2,view.getHeight()/2,0, 0);
+        Intent intent=new Intent(context, LookAndLostReleaseActivity.class);
+        try {
+            ActivityCompat.startActivity(this, intent,
+                    options.toBundle());
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            startActivity(intent);
+        }
     }
 
 
@@ -91,16 +100,6 @@ public class MainActivity extends BaseBarActivity
         return R.layout.activity_main;
     }
 
-    private List<Map<String,String>> getData(){
-        List<Map<String,String>> list=new ArrayList<>();
-        Map<String,String> map;
-        for (int i=0;i<100;i++){
-            map=new HashMap<>();
-            map.put("string",i+"");
-            list.add(map);
-        }
-        return list;
-    }
 
     @Override
     public void onBackPressed() {
@@ -131,6 +130,7 @@ public class MainActivity extends BaseBarActivity
             return true;
         }
 
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -149,7 +149,7 @@ public class MainActivity extends BaseBarActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
-
+            ShareUtils.share(context);
         } else if (id == R.id.nav_send) {
 
         }
@@ -158,4 +158,5 @@ public class MainActivity extends BaseBarActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

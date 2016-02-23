@@ -12,6 +12,7 @@ import com.example.administrator.LookAndLost.R;
 import com.example.administrator.LookAndLost.utils.Constants;
 import com.example.administrator.LookAndLost.utils.FileUtil;
 import com.example.administrator.LookAndLost.utils.SPUtils;
+import com.example.administrator.LookAndLost.utils.StatusUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.IOException;
@@ -34,6 +35,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusUtils.hideStatusBar(this);
         city=SPUtils.get4Sp(this, Constants.KEY_CITY,"");
         MobclickAgent.setDebugMode(BuildConfig.DEBUG);
         if (TextUtils.isEmpty(city)){
@@ -69,6 +71,8 @@ public class SplashActivity extends BaseActivity {
             skipActivity();
         }
     }
+
+
 
 
     private void skipActivity(){

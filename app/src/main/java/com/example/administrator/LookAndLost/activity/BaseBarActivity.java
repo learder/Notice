@@ -1,7 +1,9 @@
 package com.example.administrator.LookAndLost.activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.example.administrator.LookAndLost.R;
 
@@ -21,9 +23,23 @@ public abstract class BaseBarActivity extends BaseActivity {
 //        if(!TextUtils.isEmpty(NavUtils.getParentActivityName(this))){
 //            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        }
-//        toolbar.setNavigationIcon(R.mipmap.ic_launcher);
+        toolbar.setNavigationIcon(android.R.drawable.ic_menu_close_clear_cancel);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+    }
 
-
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            finishAfterTransition();
+        }else {
+            finish();
+        }
     }
 
     protected void setBarTitle(String str){

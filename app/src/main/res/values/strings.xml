@@ -19,4 +19,7 @@
     <string name="msg_checking_version">检查中…</string>
     <string name="msg_no_new_version">没有新版本UﾟｪﾟU</string>
     <string name="msg_new_version_found" formatted="false">新版本:%s(Build %d):%s</string>
+    <string name="action_share">分享</string>
+    <string name="share_text">这是“寻物启事”的分享</string>
+
 </resources>

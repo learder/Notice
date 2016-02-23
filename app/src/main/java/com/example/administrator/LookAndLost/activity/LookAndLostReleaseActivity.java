@@ -1,8 +1,11 @@
 package com.example.administrator.LookAndLost.activity;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import com.example.administrator.LookAndLost.R;
+
+import butterknife.InjectView;
 
 
 /**
@@ -18,16 +21,25 @@ public class LookAndLostReleaseActivity extends BaseBarActivity {
 //        Snackbar.make(view,"发布",Snackbar.LENGTH_SHORT).show();
 //    }
 
+    @InjectView(R.id.release_add_img_iv)
+    ImageView release_add_img_iv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBarTitle("发布寻物启事");
+//        ViewCompat.setTransitionName(release_add_img_iv,MainActivity.TRANSITION);
+
     }
+
+
 
     @Override
     protected int getContentView() {
         return R.layout.activity_look_and_lost_release;
     }
+
+
 
 
 }
