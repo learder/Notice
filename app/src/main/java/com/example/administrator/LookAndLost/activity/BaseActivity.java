@@ -66,7 +66,7 @@ public abstract class BaseActivity extends AppCompatActivity{
     }
 
     protected void snackbarShow(String str){
-        Snackbar.make(null,str,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(getCurrentFocus(),str,Snackbar.LENGTH_SHORT).show();
     }
 
 }

@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.example.administrator.LookAndLost.BuildConfig;
 import com.example.administrator.LookAndLost.R;
@@ -55,7 +57,7 @@ public class SplashActivity extends BaseActivity {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                         isCopySuccess=false;
-                        Snackbar.make(null,"复制城市地址失败，请重试，或者点这里，使用默认城市“杭州”来跳过！",Snackbar.LENGTH_INDEFINITE).setAction("", new View.OnClickListener() {
+                        Snackbar.make(View.inflate(context,getContentView(), Layou),"复制城市地址失败，请重试，或者点这里，使用默认城市“杭州”来跳过！",Snackbar.LENGTH_INDEFINITE).setAction("", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 SPUtils.save2Sp(context, Constants.KEY_CITY,"杭州市");
