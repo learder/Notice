@@ -5,13 +5,13 @@ android {
         release {
             keyAlias 'yan'
             keyPassword 'kannibushuang123'
-            storeFile file('D:/MyApplication3/app/key_store/key.jks')
+            storeFile file('/app/key_store/key.jks')
             storePassword 'kannibushuang123'
         }
         debug {
             keyAlias 'yan'
             keyPassword 'kannibushuang123'
-            storeFile file('D:/MyApplication3/app/key_store/key.jks')
+            storeFile file('D:/android/Notice/app/key_store/keyStore.jks')
             storePassword 'kannibushuang123'
         }
     }
