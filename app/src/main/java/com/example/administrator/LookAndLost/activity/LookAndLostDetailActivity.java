@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.administrator.LookAndLost.AnimHelp;
 import com.example.administrator.LookAndLost.R;
 import com.example.administrator.LookAndLost.entity.LookAndLostEntity;
 import com.example.administrator.LookAndLost.utils.Constants;
@@ -41,6 +43,9 @@ public class LookAndLostDetailActivity extends BaseBarActivity {
     @InjectView(R.id.detail_timeout_tv)
     TextView detailTimeoutTv;
 
+    @InjectView(R.id.detail_scroll_nsv)
+    NestedScrollView detail_scroll_nsv;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,13 +53,16 @@ public class LookAndLostDetailActivity extends BaseBarActivity {
         ViewCompat.setTransitionName(detailImgIv, MainActivity.TRANSITION);
         LookAndLostEntity entity=getIntent().getParcelableExtra(Constants.KEY_LOOK_AND_LOST_ENTITY);
         setDetailInfo(entity);
+        setTitle("");
+        AnimHelp.bottonInAnim(detail_scroll_nsv);
+//        AnimHelp.alphaOutAnim(detail_scroll_nsv);
 
     }
 
     private void setDetailInfo(LookAndLostEntity entity){
         if (entity!=null){
             detailTitleTv.setText(entity.getTitle());
-            detailTitleTv.setText(entity.getEventType());
+            detailTypeTv.setText(entity.getEventType());
             detailContentTv.setText(entity.getContent());
             detailRewardTv.setText(entity.getReward());
             detailNameTv.setText(entity.getUserName());
@@ -77,5 +85,11 @@ public class LookAndLostDetailActivity extends BaseBarActivity {
             collapsingToolbarLayout.setTitle(str);
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        AnimHelp.alphaOutAnim(detail_scroll_nsv);
+        super.onDestroy();
     }
 }

@@ -11,7 +11,7 @@ public enum ResultCode {
         }
     },
 
-    RESULT_CLIENT_SUCCESS(2000){
+    RESULT_CLIENT_SUCCESS(20000){
       public String getString(){
           return "客户端测试数据请求成功";
       }

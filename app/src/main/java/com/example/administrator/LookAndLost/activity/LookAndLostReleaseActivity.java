@@ -28,7 +28,6 @@ public class LookAndLostReleaseActivity extends BaseBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBarTitle("发布寻物启事");
-//        ViewCompat.setTransitionName(release_add_img_iv,MainActivity.TRANSITION);
 
     }
 

@@ -32,7 +32,7 @@ public class TimeUtils {
 
     public static String getTimeFromLong(long milliSeconds){
         Date date=new Date(milliSeconds);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日");
         String dateString = formatter.format(date);
         return dateString;
     }

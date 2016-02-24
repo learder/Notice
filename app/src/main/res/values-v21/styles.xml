@@ -18,7 +18,7 @@
 
 </style>
 
-    <style name="SplashScreen" parent="Base.DialogWindowTitle.AppCompat">
+    <style name="SplashScreen" parent="BaseTheme">
         <item name="android:padding">0dp</item>
         <item name="android:windowFrame">@null</item>
         <!--<item name="android:windowBackground">@mipmap/ic_launcher</item>-->

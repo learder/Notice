@@ -13,6 +13,9 @@ public class Constants {
 
     public static final String DEFAULT_CITY="杭州";
 
+    public static final int TYPE_LOOK=0;
+    public static final int TYPE_LOST=1;
+
 
     public static final String LOCATION_CITY_DB_NAME_DB = "prov_city_area_street.db";
     public static final String LOCATION_CITY_DB_NAME_JOURNAL = "prov_city_area_street.db-journal";

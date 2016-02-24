@@ -14,6 +14,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.administrator.LookAndLost.App;
 import com.example.administrator.LookAndLost.BuildConfig;
+import com.example.administrator.LookAndLost.TestSource;
 import com.example.administrator.LookAndLost.utils.Constants;
 import com.example.administrator.LookAndLost.utils.SPUtils;
 import com.google.gson.Gson;
@@ -59,7 +60,8 @@ public class NetRequest {
         if (cache){
             //数据库
         }else {
-            netRequest(newparam,callback);
+//            netRequest(newparam,callback);
+            TestSource.getInstance().netRequest(commandId,callback);
         }
 
     }
@@ -76,14 +78,15 @@ public class NetRequest {
         StringRequest stringRequest=new StringRequest(URL + params, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                if (BuildConfig.DEBUG) Log.d("NetRequest", response);
                 if (TextUtils.isEmpty(response)){
                     callback.onError(ResultCode.RESULT_CLIENT_UNKNOW.getCode(),ResultCode.RESULT_CLIENT_UNKNOW.getString());
                 }
                 try {
                     JSONObject json=new JSONObject(response);
-                    int resultCode=json.optInt("resultCode");
-                    if (resultCode==ResultCode.RESULT_SERVICE_SUCCESS.getCode()){
-                        String str=json.getString("data");
+                    int resultCode=json.optInt(ParamManager.Common.RESULT_CODE);
+                    if (resultCode==ResultCode.RESULT_SERVICE_SUCCESS.getCode()||resultCode==ResultCode.RESULT_CLIENT_SUCCESS.getCode()){
+                        String str=json.getString(ParamManager.Common.DATA);
                         if (callback.mType == String.class)
                         {
                             callback.onResponse(str);
@@ -93,7 +96,7 @@ public class NetRequest {
                             callback.onResponse(o);
                         }
                     }else {
-                        String resultString=json.optString("resultString");
+                        String resultString=json.optString(ParamManager.Common.RESULT_STRING);
                         callback.onError(resultCode,resultString);
                     }
                 } catch (JSONException e) {
@@ -105,6 +108,8 @@ public class NetRequest {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+//                error.printStackTrace();
+                if (BuildConfig.DEBUG) Log.d("NetRequest", "错误!!"+" callBack-->"+callback.toString());
                 callback.onError(ResultCode.RESULT_CLIENT_VOLLEY_ERROR.getCode(),ResultCode.RESULT_CLIENT_VOLLEY_ERROR.getString());
             }
         });
@@ -122,11 +127,11 @@ public class NetRequest {
             jsonObject=new JSONObject();
         }
         try {
-            jsonObject.put("commandId",commandId);
-            jsonObject.put("deviceId",getDeviceId());
-            jsonObject.put("clientVersion",getClientVersionCode());
-            jsonObject.put("city", SPUtils.get4Sp(App.getAppContext(),Constants.KEY_CITY,Constants.DEFAULT_CITY));
-            jsonObject.put("userId",0);
+            jsonObject.put(ParamManager.Common.COMMAND_ID,commandId);
+            jsonObject.put(ParamManager.Common.DEVICE_ID,getDeviceId());
+            jsonObject.put(ParamManager.Common.CLIENT_VERSION,getClientVersionCode());
+            jsonObject.put(ParamManager.Common.CITY, SPUtils.get4Sp(App.getAppContext(),Constants.KEY_CITY,Constants.DEFAULT_CITY));
+            jsonObject.put(ParamManager.Common.USER_ID,0);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -170,7 +175,7 @@ public class NetRequest {
 
     public static abstract class ResultCallback<T>
     {
-        Type mType;
+        public Type mType;
 
         public ResultCallback()
         {
