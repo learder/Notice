@@ -20,4 +20,11 @@ public class Constants {
     public static final String LOCATION_CITY_DB_NAME_DB = "prov_city_area_street.db";
     public static final String LOCATION_CITY_DB_NAME_JOURNAL = "prov_city_area_street.db-journal";
     public static final String LOCATION_SPUTILS_COPY_DB_KEY = "location_sputils_copy_db_key";
+
+
+    public static final int RESULT_CODE_PHOTO=100;
+    public static final int RESULT_CODE_CAMERA=101;
+    public static final int RESULT_CODE_ZOOM=102;
+
+
 }

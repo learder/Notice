@@ -42,12 +42,39 @@
             android:id="@+id/release_add_img_iv"
             android:layout_height="240dp" />
 
+            <RadioGroup
+                android:id="@+id/release_type_rg"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/release_look_rb"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:text="寻物"
+                    android:textSize="20sp"
+                    android:layout_marginRight="80dp"
+                    android:layout_height="wrap_content" />
+
+                <RadioButton
+                    android:id="@+id/release_lost_rb"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:textSize="20sp"
+                    android:text="启示"
+                    android:layout_height="wrap_content" />
+
+            </RadioGroup>
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:hint="请输入标题"
             android:layout_height="wrap_content">
 
             <EditText
+                android:id="@+id/release_title_edt"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
@@ -58,37 +85,80 @@
             android:layout_height="wrap_content">
 
             <EditText
+                android:id="@+id/release_content_edt"
                 android:layout_width="match_parent"
-                android:hint="请输入标题"
+                android:hint="描述一下你捡到或丢失的事物"
                 android:layout_height="match_parent"/>
 
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:hint="请输入标题"
+            android:hint="请输入地址"
             android:layout_height="wrap_content">
 
             <EditText
+                android:id="@+id/release_address_edt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:hint="请输入标题"
+            android:hint="请输入您的称呼"
             android:layout_height="wrap_content">
 
             <EditText
+                android:id="@+id/release_name_edt"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
         </android.support.design.widget.TextInputLayout>
 
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:hint="请输入您的联系方式"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/release_contect_edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:hint="你可以适当的写上你的需要索取的酬劳，或酬谢他人"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/release_reward_edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:hint="备注"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/release_notes_edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </android.support.design.widget.TextInputLayout>
+
             <Button
-                android:gravity="center"
+                android:id="@+id/release_release_btn"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_gravity="center"
                 android:text="点击发布"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>

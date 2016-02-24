@@ -1,7 +1,5 @@
 package com.example.administrator.LookAndLost.utils.network;
 
-import com.example.administrator.LookAndLost.utils.network.NetRequest;
-
 import org.json.JSONObject;
 
 /**
@@ -25,6 +23,11 @@ public class CommandIdManager {
     public static void postRelease(JSONObject param, NetRequest.ResultCallback callback, boolean cache){
         NetRequest.getInstance().request(COMMAND_ID_RELEASE,param,callback,cache);
     }
+
+//    public static void cancelAll(){
+//        NetRequest.getInstance().requestQueue.cancelAll(null);
+//    }
+
 
 
 }
