@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="12dp"
-    app:cardBackgroundColor="#02f588"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -13,20 +12,24 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/item_look_and_lost_tv"
+            android:id="@+id/item_look_and_lost_adapter_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="一个钥匙"/>
 
-        <ImageView
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
+        <com.facebook.drawee.view.SimpleDraweeView
+            xmlns:fresco="http://schemas.android.com/apk/res-auto"
+            android:layout_margin="8dp"
+            android:id="@+id/item_look_and_lost_adapter_img_sdv"
             android:layout_width="match_parent"
-            android:src="@mipmap/ic_launcher"
-            android:scaleType="centerCrop"
-            android:layout_height="180dp" />
+            android:layout_height="180dp"
+            fresco:fadeDuration="300"
+            fresco:placeholderImage="@mipmap/ic_launcher"
+            fresco:placeholderImageScaleType="centerCrop"
+            />
 
         <TextView
+            android:id="@+id/item_look_and_lost_adapter_address_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="捡到地址：杭州市西湖区文一西路1999号未来科技城海川园"/>

@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.administrator.LookAndLost.R;
@@ -63,10 +62,6 @@ public abstract class BaseActivity extends AppCompatActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-    }
-
-    protected void snackbarShow(String str){
-        Snackbar.make(getCurrentFocus(),str,Snackbar.LENGTH_SHORT).show();
     }
 
 }

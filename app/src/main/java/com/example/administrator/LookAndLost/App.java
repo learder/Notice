@@ -3,6 +3,8 @@ package com.example.administrator.LookAndLost;
 import android.app.Application;
 import android.content.Context;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+
 /**
  * Created by Administrator on 2016/2/18.
  */
@@ -13,6 +15,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         setI(this);
+        Fresco.initialize(this);
     }
 
     /**

@@ -10,6 +10,7 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -18,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.administrator.LookAndLost.R;
@@ -51,12 +51,8 @@ import butterknife.OnClick;
 public class LookAndLostReleaseActivity extends BaseBarActivity {
 
 
-    @InjectView(R.id.release_add_img_iv)
-    ImageView releaseAddImgIv;
-    @InjectView(R.id.release_look_rb)
-    RadioButton releaseLookRb;
-    @InjectView(R.id.release_lost_rb)
-    RadioButton releaseLostRb;
+    @InjectView(R.id.release_add_img_sdv)
+    ImageView releaseAddImgSdv;
     @InjectView(R.id.release_type_rg)
     RadioGroup releaseTypeRg;
     @InjectView(R.id.release_title_edt)
@@ -79,6 +75,7 @@ public class LookAndLostReleaseActivity extends BaseBarActivity {
     AlertDialog dialog;
     private String imageStr;
 
+    private Uri imageUri;
 
 
     @Override
@@ -95,11 +92,11 @@ public class LookAndLostReleaseActivity extends BaseBarActivity {
     }
 
 
-    @OnClick({R.id.release_release_btn,R.id.release_add_img_iv})
-    public void onClick(View view){
-        int id=view.getId();
-        if (id==R.id.release_add_img_iv){
-            AlertDialog dialog=new AlertDialog.Builder(context).setPositiveButton("相册", new DialogInterface.OnClickListener() {
+    @OnClick({R.id.release_release_btn, R.id.release_add_img_sdv})
+    public void onClick(View view) {
+        int id = view.getId();
+        if (id == R.id.release_add_img_sdv) {
+            AlertDialog dialog = new AlertDialog.Builder(context).setPositiveButton("相册", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
@@ -114,62 +111,62 @@ public class LookAndLostReleaseActivity extends BaseBarActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String IMAGE_FILE_LOCATION = "file:///sdcard/temp.jpg";// temp file
-                    Uri imageUri = Uri.parse(IMAGE_FILE_LOCATION);
+                     imageUri = Uri.parse(IMAGE_FILE_LOCATION);
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);// action is
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                     startActivityForResult(intent, Constants.RESULT_CODE_CAMERA);
                 }
             }).setCancelable(true).show();
         }
-        if (id==R.id.release_release_btn){
+        if (id == R.id.release_release_btn) {
             request();
         }
     }
 
-    private void request(){
-        int type_by_id=releaseTypeRg.getCheckedRadioButtonId();
-        int type=0;
-        switch (type_by_id){
+    private void request() {
+        int type_by_id = releaseTypeRg.getCheckedRadioButtonId();
+        int type = 0;
+        switch (type_by_id) {
             case R.id.release_look_rb:
-                type=1;
+                type = 1;
                 break;
             case R.id.release_lost_rb:
-                type=2;
+                type = 2;
                 break;
         }
-        if (type==0){
+        if (type == 0) {
             snackbarShow("请至少选择一种发布类型：“寻物或启示”");
             return;
         }
-        String title=releaseTitleEdt.getText().toString();
-        if (TextUtils.isEmpty(title)){
+        String title = releaseTitleEdt.getText().toString();
+        if (TextUtils.isEmpty(title)) {
             snackbarShow("请输入标题");
             return;
         }
-        String contact=releaseContectEdt.getText().toString();
+        String contact = releaseContectEdt.getText().toString();
         if (TextUtils.isEmpty(contact)) {
             snackbarShow("请至少输入一种联系方式，方便别人联系你");
             return;
         }
 
-        JSONObject jsonObject=new JSONObject();
+        JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put(ParamManager.ReleaseEntity.RELEASE_TYPE,type);
-            jsonObject.put(ParamManager.ReleaseEntity.TITLE,releaseTitleEdt.getText().toString());
-            jsonObject.put(ParamManager.ReleaseEntity.USER_NAME,releaseNameEdt.getText().toString());
-            jsonObject.put(ParamManager.ReleaseEntity.ADDRESS,releaseAddressEdt.getText().toString());
-            jsonObject.put(ParamManager.ReleaseEntity.CONTACT,releaseContectEdt.getText().toString());
-            jsonObject.put(ParamManager.ReleaseEntity.CONTENT,releaseContentEdt.getText().toString());
-            jsonObject.put(ParamManager.ReleaseEntity.NOTES,releaseNotesEdt.getText().toString());
-            jsonObject.put(ParamManager.ReleaseEntity.REWARD,releaseRewardEdt.getText().toString());
-            jsonObject.put(ParamManager.ReleaseEntity.IMGS,"");
+            jsonObject.put(ParamManager.ReleaseEntity.RELEASE_TYPE, type);
+            jsonObject.put(ParamManager.ReleaseEntity.TITLE, releaseTitleEdt.getText().toString());
+            jsonObject.put(ParamManager.ReleaseEntity.USER_NAME, releaseNameEdt.getText().toString());
+            jsonObject.put(ParamManager.ReleaseEntity.ADDRESS, releaseAddressEdt.getText().toString());
+            jsonObject.put(ParamManager.ReleaseEntity.CONTACT, releaseContectEdt.getText().toString());
+            jsonObject.put(ParamManager.ReleaseEntity.CONTENT, releaseContentEdt.getText().toString());
+            jsonObject.put(ParamManager.ReleaseEntity.NOTES, releaseNotesEdt.getText().toString());
+            jsonObject.put(ParamManager.ReleaseEntity.REWARD, releaseRewardEdt.getText().toString());
+            jsonObject.put(ParamManager.ReleaseEntity.IMGS, "");
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        CommandIdManager.postRelease(jsonObject,new CallBack(),false);
+        CommandIdManager.postRelease(jsonObject, new CallBack(), false);
 
-        if (dialog==null){
-            dialog=new AlertDialog.Builder(context).setView(new ProgressBar(context)).setCancelable(false).show();
+        if (dialog == null) {
+            dialog = new AlertDialog.Builder(context).setView(new ProgressBar(context)).setCancelable(false).show();
         }
 
     }
@@ -178,15 +175,15 @@ public class LookAndLostReleaseActivity extends BaseBarActivity {
 
         @Override
         public void onError(int error, String str) {
-            if (dialog!=null){
+            if (dialog != null) {
                 dialog.cancel();
-                snackbarShow("发布失败:error"+error);
+                snackbarShow("发布失败:error" + error);
             }
         }
 
         @Override
         public void onResponse(ReleaseResultEntity response) {
-            if (dialog!=null){
+            if (dialog != null) {
                 dialog.cancel();
                 snackbarShow(TimeUtils.getTimeFromLong(response.getTimeout()));
             }
@@ -198,7 +195,6 @@ public class LookAndLostReleaseActivity extends BaseBarActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (Activity.RESULT_OK == resultCode) {
-            Uri imageUri=data.getParcelableExtra(MediaStore.EXTRA_OUTPUT);
             switch (requestCode) {
                 case Constants.RESULT_CODE_PHOTO:
                     if (data == null) {
@@ -227,7 +223,6 @@ public class LookAndLostReleaseActivity extends BaseBarActivity {
                         snackbarShow("图片尺寸过小， 请重新上传！");
                         return;
                     }
-                    imageStr = imgToBase64(bm2, 200);
                     cropImageUri(imageUri);
                     break;
 
@@ -239,11 +234,12 @@ public class LookAndLostReleaseActivity extends BaseBarActivity {
                             return;
                         }
 
-                        if (bm3.getHeight() < 50 || bm3.getWidth() < 50) {
+                        if (bm3.getHeight() < 240 || bm3.getWidth() < 240) {
                             snackbarShow("图片尺寸过小， 请重新上传！");
                             return;
                         }
 
+                        releaseAddImgSdv.setImageBitmap(bm3);
 //					takePhotoTv.setImageBitmap(bm3);
 
                         if (!FileUtil.getSDCardState()) {
@@ -273,7 +269,7 @@ public class LookAndLostReleaseActivity extends BaseBarActivity {
     private Bitmap decodeUriAsBitmap(Uri uri) {
         Bitmap bitmap = null;
         if (uri==null){
-            return bitmap;
+            return null;
         }
         try {
             bitmap = BitmapFactory.decodeStream(getContentResolver()
@@ -408,33 +404,32 @@ public class LookAndLostReleaseActivity extends BaseBarActivity {
 
     public static class BitmapRotateUtil {
         private static BitmapRotateUtil bitmapRotateUtils;
-        private BitmapRotateUtil(){}
 
-        public static BitmapRotateUtil getInstance()
-        {
-            if(null == bitmapRotateUtils)
-            {
+        private BitmapRotateUtil() {
+        }
+
+        public static BitmapRotateUtil getInstance() {
+            if (null == bitmapRotateUtils) {
                 bitmapRotateUtils = new BitmapRotateUtil();
             }
             return bitmapRotateUtils;
         }
 
         /**
-         *得到 图片旋转 的角度
-         *@param filepath
-         *@return
+         * 得到 图片旋转 的角度
+         *
+         * @param filepath
+         * @return
          **/
         private int getExifOrientation(String filepath) {
             int degree = 0;
             ExifInterface exif = null;
             try {
                 exif = new ExifInterface(filepath);
-                if (exif != null)
-                {
+                if (exif != null) {
                     int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, -1);
                     if (orientation != -1) {
-                        switch (orientation)
-                        {
+                        switch (orientation) {
                             case ExifInterface.ORIENTATION_ROTATE_90:
                                 degree = 90;
                                 break;
@@ -447,43 +442,45 @@ public class LookAndLostReleaseActivity extends BaseBarActivity {
                         }
                     }
                 }
-            } catch (IOException ex) { }
+            } catch (IOException ex) {
+            }
             return degree;
         }
 
 
         /**
-         * @param angle 图片发生旋转的角度
+         * @param angle  图片发生旋转的角度
          * @param bitmap 要旋转的bitmap
          * @return
          */
-        private Bitmap rotateBitmap(int angle,Bitmap bitmap)
-        {
+        private Bitmap rotateBitmap(int angle, Bitmap bitmap) {
             try {
-                if(angle!=0)
-                {  //如果照片出现了 旋转 那么 就更改旋转度数
+                if (angle != 0) {  //如果照片出现了 旋转 那么 就更改旋转度数
                     Matrix matrix = new Matrix();
                     matrix.postRotate(angle);
-                    bitmap = Bitmap.createBitmap(bitmap,0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
                 }
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
             return bitmap;
         }
 
         /**
          * 检查bitmap角度发生变换，如果发生变化进行校验，防止图片颠倒
+         *
          * @param filePath
          * @param bitmap
          * @return
          */
-        public Bitmap checkBitmapAngleToAdjust(String filePath,Bitmap bitmap)
-        {
+        public Bitmap checkBitmapAngleToAdjust(String filePath, Bitmap bitmap) {
             int angle = getExifOrientation(filePath);
             return rotateBitmap(angle, bitmap);
         }
 
     }
 
-
+    protected void snackbarShow(String str) {
+        Snackbar.make(releaseAddImgSdv, str, Snackbar.LENGTH_SHORT).show();
+    }
 
 }

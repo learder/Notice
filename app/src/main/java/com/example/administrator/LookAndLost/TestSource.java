@@ -75,7 +75,7 @@ public class TestSource {
                 case CommandIdManager.COMMAND_ID_LOOK_LIST:
                     JSONArray looks=new JSONArray();
                     JSONObject look;
-                    for (int i=0;i<100;i++){
+                    for (int i=0;i<3;i++){
                         look=new JSONObject();
                         look.put(ParamManager.LookAndLostEntity.TITLE,"寻物启事，标题"+i);
                         look.put(ParamManager.LookAndLostEntity.USER_NAME,"用户名："+i);

@@ -20,6 +20,7 @@ import com.example.administrator.LookAndLost.utils.Constants;
 import com.example.administrator.LookAndLost.utils.network.CommandIdManager;
 import com.example.administrator.LookAndLost.utils.network.NetRequest;
 import com.example.administrator.LookAndLost.utils.network.ParamManager;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -185,7 +186,8 @@ public class LookAndLostListFragment extends BaseListFragment {
         MobclickAgent.onEvent(getContext(),"onItemClick",hashMap);
         Intent intent=new Intent(getContext(), LookAndLostDetailActivity.class);
         intent.putExtra(Constants.KEY_LOOK_AND_LOST_ENTITY,entity);
-        ActivityOptionsCompat optionsCompat=ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),childView, MainActivity.TRANSITION);
+        SimpleDraweeView sdv= (SimpleDraweeView) childView.findViewById(R.id.item_look_and_lost_adapter_img_sdv);
+        ActivityOptionsCompat optionsCompat=ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),sdv, MainActivity.TRANSITION);
         try {
             ActivityCompat.startActivity(getActivity(),intent,optionsCompat.toBundle());
         } catch (IllegalArgumentException e) {
@@ -198,4 +200,7 @@ public class LookAndLostListFragment extends BaseListFragment {
     protected int getCreateView() {
         return R.layout.layout_look_and_lost;
     }
+
+
+
 }

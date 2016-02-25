@@ -10,8 +10,8 @@
 
 <style name="AppTheme" parent="BaseTheme">
     <item name="android:windowContentTransitions">true</item>
-    <item name="android:windowAllowEnterTransitionOverlap">true</item>
-    <item name="android:windowAllowReturnTransitionOverlap">true</item>
+    <!--<item name="android:windowAllowEnterTransitionOverlap">true</item>-->
+    <!--<item name="android:windowAllowReturnTransitionOverlap">true</item>-->
     <!--<item name="android:windowSharedElementEnterTransition">@android:transition/move</item>-->
     <!--<item name="android:windowSharedElementExitTransition">@android:transition/move</item>-->
     <!--<item name="android:buttonTint">@drawable/selectable_background</item>-->

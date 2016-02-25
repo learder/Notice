@@ -5,13 +5,13 @@ android {
         release {
             keyAlias 'yan'
             keyPassword 'kannibushuang123'
-            storeFile file('/app/key_store/key.jks')
+            storeFile file('D:/MyApplication3/app/key_store/key.jks')
             storePassword 'kannibushuang123'
         }
         debug {
             keyAlias 'yan'
             keyPassword 'kannibushuang123'
-            storeFile file('D:/android/Notice/app/key_store/keyStore.jks')
+            storeFile file('D:/MyApplication3/app/key_store/key.jks')
             storePassword 'kannibushuang123'
         }
     }
@@ -53,4 +53,5 @@ dependencies {
     compile files('libs/pinyin4j-2.5.0.jar')
     compile files('libs/umeng-update-v2.6.0.1.jar')
     compile files('libs/umeng-analytics-v5.6.1.jar')
+    compile 'com.facebook.fresco:fresco:0.9.0+'
 }

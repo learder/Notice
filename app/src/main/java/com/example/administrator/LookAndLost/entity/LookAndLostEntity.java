@@ -10,16 +10,16 @@ import java.util.List;
  */
 public class LookAndLostEntity implements Parcelable {
     int eventId=-1;
-    String title;
-    String eventType;
-    List<ImgEntity> imgs;
-    String address;
-    String contact;
-    long timeout;
-    String notes;
-    String userName;
-    String reward;
-    String content;
+    String title="";
+    String eventType="";
+    List<ImgEntity> imgs=null;
+    String address="";
+    String contact="";
+    long timeout=0;
+    String notes="";
+    String userName="";
+    String reward="";
+    String content="";
 
     public int getEventId() {
         return eventId;

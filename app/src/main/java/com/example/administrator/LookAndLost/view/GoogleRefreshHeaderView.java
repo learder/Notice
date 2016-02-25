@@ -2,6 +2,7 @@ package com.example.administrator.LookAndLost.view;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -44,7 +45,11 @@ public class GoogleRefreshHeaderView extends FrameLayout implements SwipeTrigger
     protected void onFinishInflate() {
         super.onFinishInflate();
         ivRefresh = (ImageView) findViewById(R.id.ivRefresh);
-        ivRefresh.setBackgroundDrawable(ringProgressDrawable);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            ivRefresh.setBackground(ringProgressDrawable);
+        }else {
+            ivRefresh.setBackgroundDrawable(ringProgressDrawable);
+        }
     }
 
     @Override
