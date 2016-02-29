@@ -63,7 +63,7 @@ public class AnimHelp {
     }
 
     public static void alphaOutAnim(final View view){
-        view.setAlpha(0);
+//        view.setAlpha(0);
         view.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -83,6 +83,29 @@ public class AnimHelp {
                 view.startAnimation(animation);
             }
         },DELAY);
+    }
+
+    public static void alphaOutAnim(final View view,long delay){
+//        view.setAlpha(0);
+        view.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Animation animation = AnimationUtils.loadAnimation(view.getContext(),
+                        R.anim.alpha_1_to_0);
+//                animation.setAnimationListener(new Animation.AnimationListener() {
+//                    @Override public void onAnimationStart(Animation animation) {
+//                        view.setAlpha(1);
+//                    }
+//
+//
+//                    @Override public void onAnimationEnd(Animation animation) {}
+//
+//
+//                    @Override public void onAnimationRepeat(Animation animation) {}
+//                });
+                view.startAnimation(animation);
+            }
+        },delay);
     }
 
 }

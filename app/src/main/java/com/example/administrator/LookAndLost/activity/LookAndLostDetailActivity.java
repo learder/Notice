@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.NestedScrollView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,9 +14,11 @@ import com.example.administrator.LookAndLost.AnimHelp;
 import com.example.administrator.LookAndLost.R;
 import com.example.administrator.LookAndLost.entity.LookAndLostEntity;
 import com.example.administrator.LookAndLost.utils.Constants;
+import com.example.administrator.LookAndLost.utils.ShareUtils;
 import com.example.administrator.LookAndLost.utils.TimeUtils;
 
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2016/2/19.
@@ -46,16 +50,25 @@ public class LookAndLostDetailActivity extends BaseBarActivity {
     @InjectView(R.id.detail_scroll_nsv)
     NestedScrollView detail_scroll_nsv;
 
+    LookAndLostEntity entity;
+
+    @OnClick(R.id.detail_img_iv)
+    public void myClick(){
+        AnimHelp.alphaOutAnim(detailImgIv);
+        AnimHelp.alphaOutAnim(detail_scroll_nsv);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         ViewCompat.setTransitionName(detailImgIv, MainActivity.TRANSITION);
-        LookAndLostEntity entity=getIntent().getParcelableExtra(Constants.KEY_LOOK_AND_LOST_ENTITY);
+        entity=getIntent().getParcelableExtra(Constants.KEY_LOOK_AND_LOST_ENTITY);
         setDetailInfo(entity);
         setTitle("");
         AnimHelp.bottonInAnim(detail_scroll_nsv);
 //        AnimHelp.alphaOutAnim(detail_scroll_nsv);
+
 
     }
 
@@ -88,8 +101,46 @@ public class LookAndLostDetailActivity extends BaseBarActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onBackPressed() {
+        AnimHelp.alphaOutAnim(detailImgIv);
+//        detailImgIv.setAlpha(0);
         AnimHelp.alphaOutAnim(detail_scroll_nsv);
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id==R.id.release_share){
+            if (entity!=null){
+//                String str=entity.getImgs().get(0).getImg();
+                ShareUtils.share(context,entity.getTitle(),getShareString(entity));
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private String getShareString(LookAndLostEntity entity){
+        StringBuffer sb=new StringBuffer();
+        sb.append("我在").append(entity.getAddress()).append(entity.getEventType()).append(entity.getContent());
+
+        return sb.toString();
     }
 }

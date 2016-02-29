@@ -50,9 +50,9 @@ public class SplashActivity extends BaseActivity {
                     try {
                         if (BuildConfig.DEBUG) Log.d("SplashActivity", "城市数据库拷贝到文件夹开始");
                         FileUtil.copyBigDataToSD(context, "prov_city_area_street_db-journal",
-                                FileUtil.createSDFile("wlan/dbDir", Constants.LOCATION_CITY_DB_NAME_JOURNAL).getPath());
+                                FileUtil.createSDFile("xunwuqishi/dbDir", Constants.LOCATION_CITY_DB_NAME_JOURNAL).getPath());
                         FileUtil.copyBigDataToSD(context, "prov_city_area_street_db",
-                                FileUtil.createSDFile("wlan/dbDir", Constants.LOCATION_CITY_DB_NAME_DB).getPath());
+                                FileUtil.createSDFile("xunwuqishi/dbDir", Constants.LOCATION_CITY_DB_NAME_DB).getPath());
                         SPUtils.save2Sp(context, Constants.LOCATION_SPUTILS_COPY_DB_KEY, true);
                         if (BuildConfig.DEBUG) Log.d("SplashActivity", "城市数据库拷贝到文件夹结束");
                         skipActivity();

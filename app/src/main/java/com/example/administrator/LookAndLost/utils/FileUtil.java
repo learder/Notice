@@ -187,7 +187,7 @@ public class FileUtil extends BaseFileUtil {
 	public static String getBasePath() {
 		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 			//去掉包的SDCARD存储路径
-			return Environment.getExternalStorageDirectory() + "/wlan";
+			return Environment.getExternalStorageDirectory() + "/xunwuqishi";
 		}
 
 

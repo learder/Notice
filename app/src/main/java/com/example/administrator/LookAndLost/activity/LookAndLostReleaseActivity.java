@@ -14,9 +14,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
@@ -72,10 +74,11 @@ public class LookAndLostReleaseActivity extends BaseBarActivity {
     @InjectView(R.id.release_release_btn)
     Button releaseReleaseBtn;
 
-    AlertDialog dialog;
+    ProgressBar progressBar;
     private String imageStr;
 
     private Uri imageUri;
+    private Uri zoomUri;
 
 
     @Override
@@ -87,7 +90,6 @@ public class LookAndLostReleaseActivity extends BaseBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBarTitle("发布寻物启事");
-
 
     }
 
@@ -165,8 +167,13 @@ public class LookAndLostReleaseActivity extends BaseBarActivity {
         }
         CommandIdManager.postRelease(jsonObject, new CallBack(), false);
 
-        if (dialog == null) {
-            dialog = new AlertDialog.Builder(context).setView(new ProgressBar(context)).setCancelable(false).show();
+        if (progressBar == null) {
+            progressBar =new ProgressBar(context);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+            lp.gravity =Gravity.CENTER;
+            progressBar.setVisibility(View.VISIBLE);
+            addContentView(progressBar,lp);
         }
 
     }
@@ -175,16 +182,16 @@ public class LookAndLostReleaseActivity extends BaseBarActivity {
 
         @Override
         public void onError(int error, String str) {
-            if (dialog != null) {
-                dialog.cancel();
+            if (progressBar != null) {
+                progressBar.setVisibility(View.GONE);
                 snackbarShow("发布失败:error" + error);
             }
         }
 
         @Override
         public void onResponse(ReleaseResultEntity response) {
-            if (dialog != null) {
-                dialog.cancel();
+            if (progressBar != null) {
+                progressBar.setVisibility(View.GONE);
                 snackbarShow(TimeUtils.getTimeFromLong(response.getTimeout()));
             }
 
@@ -227,8 +234,8 @@ public class LookAndLostReleaseActivity extends BaseBarActivity {
                     break;
 
                 case Constants.RESULT_CODE_ZOOM:
-                    if (imageUri != null) {
-                        Bitmap bm3 = decodeUriAsBitmap(imageUri);
+                    if (zoomUri != null) {
+                        Bitmap bm3 = decodeUriAsBitmap(zoomUri);
                         if (bm3 == null) {
                             snackbarShow("无法获取图片！");
                             return;
@@ -240,7 +247,6 @@ public class LookAndLostReleaseActivity extends BaseBarActivity {
                         }
 
                         releaseAddImgSdv.setImageBitmap(bm3);
-//					takePhotoTv.setImageBitmap(bm3);
 
                         if (!FileUtil.getSDCardState()) {
                             snackbarShow("储存卡状态不可用");
@@ -251,7 +257,7 @@ public class LookAndLostReleaseActivity extends BaseBarActivity {
                         try {
                             f = FileUtil.createSDFile("/LookAndLost/", "avatar.png");
                             f.createNewFile();
-                            compressImage(imageUri.getPath(),
+                            compressImage(zoomUri.getPath(),
                                     f.getAbsolutePath());
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -286,7 +292,6 @@ public class LookAndLostReleaseActivity extends BaseBarActivity {
     }
 
     private void cropImageUri(Uri uri) {
-        Uri imageUri;
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
         intent.putExtra("crop", "true");
@@ -294,16 +299,16 @@ public class LookAndLostReleaseActivity extends BaseBarActivity {
         // aspect最好不用用1，否则有些手机会不兼容
         intent.putExtra("aspectX", 300);
         intent.putExtra("aspectY", 300);
-        intent.putExtra("outputX", 300);
-        intent.putExtra("outputY", 300);
+        intent.putExtra("outputX", 800);
+        intent.putExtra("outputY", 800);
 
         // 裁剪时不以黑边填充
         intent.putExtra("scale", true);
         intent.putExtra("scaleUpIfNeeded", true);
 
-        imageUri = Uri.parse("file:///sdcard/temp.jpg");
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-//		intent.putExtra("return-data", false);
+        zoomUri = Uri.parse("file:///sdcard/temp.jpg");
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, zoomUri);
+		intent.putExtra("return-data", false);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         intent.putExtra("noFaceDetection", true); // no face detection
         startActivityForResult(intent, Constants.RESULT_CODE_ZOOM);

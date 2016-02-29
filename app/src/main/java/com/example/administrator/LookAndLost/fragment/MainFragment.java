@@ -131,7 +131,7 @@ public class MainFragment extends BaseFragment{
             if (position==0){
                 return "寻物";
             }else {
-                return "启示";
+                return "启事";
             }
         }
 

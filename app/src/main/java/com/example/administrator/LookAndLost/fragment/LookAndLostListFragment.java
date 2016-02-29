@@ -188,6 +188,7 @@ public class LookAndLostListFragment extends BaseListFragment {
         intent.putExtra(Constants.KEY_LOOK_AND_LOST_ENTITY,entity);
         SimpleDraweeView sdv= (SimpleDraweeView) childView.findViewById(R.id.item_look_and_lost_adapter_img_sdv);
         ActivityOptionsCompat optionsCompat=ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),sdv, MainActivity.TRANSITION);
+//        ActivityOptionsCompat optionsCompat=ActivityOptionsCompat.makeScaleUpAnimation(childView,childView.getScrollX()/2,childView.getScrollY()/2,childView.getWidth(),childView.getHeight());
         try {
             ActivityCompat.startActivity(getActivity(),intent,optionsCompat.toBundle());
         } catch (IllegalArgumentException e) {

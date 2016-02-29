@@ -1,9 +1,14 @@
 package com.example.administrator.LookAndLost.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -12,13 +17,19 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.administrator.LookAndLost.BuildConfig;
 import com.example.administrator.LookAndLost.R;
+import com.example.administrator.LookAndLost.fragment.AboutFragment;
 import com.example.administrator.LookAndLost.fragment.MainFragment;
+import com.example.administrator.LookAndLost.utils.BitmapUtils;
 import com.example.administrator.LookAndLost.utils.ShareUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
@@ -40,6 +51,12 @@ public class MainActivity extends BaseBarActivity
 
     @InjectView(R.id.drawer_layout)
     public DrawerLayout drawerLayout;
+
+    private Fragment lookAndLostFragment;
+    private Fragment aboutFragment;
+
+    @InjectView(R.id.main_fl)
+    public FrameLayout mainFl;
 
     @InjectView(R.id.main_fab)
     public FloatingActionButton mainFab;
@@ -71,15 +88,18 @@ public class MainActivity extends BaseBarActivity
 
         navNv.setNavigationItemSelectedListener(this);
 
-        Fragment fragment= MainFragment.newInstance();
+        lookAndLostFragment= MainFragment.newInstance();
+        aboutFragment=AboutFragment.newInstance();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.main_fl,fragment);
+        fragmentTransaction.add(R.id.main_fl,lookAndLostFragment,lookAndLostFragment.getClass().getSimpleName());
+        fragmentTransaction.add(R.id.main_fl,aboutFragment,aboutFragment.getClass().getSimpleName());
+        fragmentTransaction.hide(aboutFragment);
         fragmentTransaction.commitAllowingStateLoss();
         UpdateConfig.setDebug(BuildConfig.DEBUG);
         updataApp();
-
     }
+
 
     /**
      * UMeng自动更新
@@ -107,7 +127,20 @@ public class MainActivity extends BaseBarActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            ExitApp();
+//            super.onBackPressed();
+        }
+    }
+    private long exitTime = 0;
+    public void ExitApp()
+    {
+        if ((System.currentTimeMillis() - exitTime) > 2000)
+        {
+            Toast.makeText(context, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else
+        {
+            finish();
         }
     }
 
@@ -126,7 +159,33 @@ public class MainActivity extends BaseBarActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id==R.id.action_sponsor){
+            MobclickAgent.onEvent(context,"onClickSponsor");
+            ImageView imageView=new ImageView(context);
+            imageView.setImageResource(R.drawable.zhifubao);
+            new AlertDialog.Builder(context).setView(imageView)
+                    .setCancelable(true)
+                    .setMessage("如果您觉得该软件对您有帮助，你可以试着赞助我们。我们感谢您的支持，并且您将会出现在下个版本的某名单中。")
+                    .setNeutralButton("保存图片到相册", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Bitmap bitmap= BitmapFactory.decodeResource(getResources(),R.drawable.zhifubao);
+                            Uri uri= BitmapUtils.saveImageToGallery(context,bitmap);
+                            String str="保存图片失败";
+                            if (uri!=null){
+                                str="已保存到xunwuqishi/img文件夹下";
+                            }
+//                            dialog.cancel();
+                            Snackbar.make(mainFl,str,Snackbar.LENGTH_LONG).show();
+//                            Toast.makeText(context,str,Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .setPositiveButton("关闭", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    }).show();
             return true;
         }
 
@@ -140,18 +199,12 @@ public class MainActivity extends BaseBarActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
+        if (id == R.id.nav_home) {
+            getSupportFragmentManager().beginTransaction().hide(aboutFragment).show(lookAndLostFragment).commitAllowingStateLoss();
+        }  else if (id == R.id.nav_about) {
+            getSupportFragmentManager().beginTransaction().hide(lookAndLostFragment).show(aboutFragment).commitAllowingStateLoss();
         } else if (id == R.id.nav_share) {
             ShareUtils.share(context);
-        } else if (id == R.id.nav_send) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

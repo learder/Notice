@@ -58,6 +58,11 @@
     <style name="DeailLinearStyle">
     </style>
 
+    <style name="AboutStyle">
+        <item name="android:textSize">17sp</item>
+        <!--<item name="android:textColor">#c5c5c5</item>-->
+    </style>
+
 
 
 </resources>
